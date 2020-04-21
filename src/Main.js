@@ -6,7 +6,10 @@ import history from './History';
 
 import RedirectionList from "./envSetup/RedirectionListMenu/RedirectionList";
 import AddRedirectionList  from "./envSetup/RedirectionListMenu/AddRedirectionList"
-
+import OperatorCluster from "./envSetup/OperatorClusterMenu/OperatorCluster";
+import AddOperatorCluster from "./envSetup/OperatorClusterMenu/AddOperatorCluster";
+import PathDetails from "./envSetup/PathDetailsMenu/PathDetails";
+import AddPathDetails from "./envSetup/PathDetailsMenu/AddPathDetails";
 const { SubMenu } = Menu;
 
 function handleClick(e) {
@@ -45,8 +48,8 @@ class Main extends Component{
       <Menu.Item>Redirection Accounts</Menu.Item>
       <Menu.Item > <NavLink  to="/environmentSetup-redirectionList"></NavLink> Redirection List</Menu.Item>
       <Menu.Item>Operator Profile</Menu.Item>
-      <Menu.Item>Path Details</Menu.Item>
-      <Menu.Item>Operator Cluster</Menu.Item>
+      <Menu.Item> <NavLink  to="/environmentSetup-pathDetails">Path Details</NavLink>Path Details</Menu.Item>
+      <Menu.Item><NavLink  to="/environmentSetup-operatorCluster">Operator Cluster</NavLink>Operator Cluster</Menu.Item>
       <Menu.Item>LCR Profile</Menu.Item>
       <Menu.Item>SC AT LCR Profile</Menu.Item>
       <Menu.Item>Customer/Supplier</Menu.Item>
@@ -113,9 +116,16 @@ class Main extends Component{
             </div>
             
             <div className="content">
+                <Route path="/homePage" component={Main} />
+
                 <Route path="/environmentSetup-redirectionList" component={RedirectionList} />
                 <Route path="/add-redirectionList" component={AddRedirectionList}/>
-                <Route path="/homePage" component={Main} />
+
+                <Route path="/environmentSetup-operatorCluster" component={OperatorCluster}/>
+                <Route path="/add-operatorCluster" component={AddOperatorCluster}/>
+                
+                <Route path="/environmentSetup-pathDetails" component={PathDetails}/>
+                <Route path="/add-pathDetails" component={AddPathDetails}/>
             </div>
                                  
             </Router>
