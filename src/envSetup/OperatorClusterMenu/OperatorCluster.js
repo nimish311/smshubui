@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
 import ApiService from "../../service/ApiService";
 import { Table, Button } from 'antd';
-import {  EditFilled , DeleteFilled , PlusCircleFilled, AlignCenterOutlined } from '@ant-design/icons';
+import {EditFilled , DeleteFilled , PlusCircleFilled} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { Input } from 'antd';
-import '../../styling/Styletable.css';
+// import '../../styling/Styletable.css';
 
-// const columns = [
-//     {
-//       title: 'Name',
-//       dataIndex: 'name',
-//     },
-//     {
-//       title: 'Age',
-//       dataIndex: 'age',
-//     },
-//     {
-//       title: 'Address',
-//       dataIndex: 'address',
-//     },
-//   ];
 
 const { Search } = Input;
 
@@ -67,51 +53,99 @@ class OperatorCluster extends Component{
         this.props.history.push('/add-operatorCluster');
     }
     
+    state = {
+                sortedInfo: null,
+            };
+            
+    handleChange = (pagination, filters, sorter) => {
+        console.log('Various parameters', pagination, filters, sorter);
+        this.setState({
+            sortedInfo: sorter,
+        });
+    };
+              
+    clearAll = () => {
+        this.setState({
+            sortedInfo: null,
+        });
+    };
+            
+    setAgeSort = () => {
+        this.setState({
+            sortedInfo: {
+                order: 'descend',
+                columnKey: 'id',
+            },
+        });
+    };
+    
     render(){
-          
+        let { sortedInfo} = this.state;
+        sortedInfo = sortedInfo || {};
+        const columns = [
+            {
+                title: 'Cluster Id',
+                dataIndex: 'id',
+                key: 'id',
+                sorter: (a, b) => a.id - b.id,
+                sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+                ellipsis: true,
+            },
+            {
+            title: 'Cluster Name',
+            dataIndex: 'clustername',
+            key: 'clustername',
+            sorter: (a, b) => a.clustername.localeCompare(b.clustername),
+                sortOrder: sortedInfo.columnKey === 'clustername' && sortedInfo.order,
+                ellipsis: true,
+            },
+            {
+            title: 'Cluster Type',
+            dataIndex: 'clustertype',
+            key: 'clustertype',
+            
+            },
+            {
+            title: 'Edit',
+            dataIndex: 'edit',
+            key: 'edit',
+            render: () => <EditFilled/>,
+            },
+            {
+                title: 'Delete',
+                dataIndex: 'delete',
+                key: 'delete',
+                render: (text, record) => <DeleteFilled 
+                onClick={() => {this.deleteUser(record.id);}}/>,
+            }
+        ];
         return(
-            <div>
-            <form>
-                <h2>Cluster List</h2>
-                
-                <Button  icon={<PlusCircleFilled/>} onClick={() => this.addUser()}>add
-                </Button><br /><br/>
-                <div>
-                    <label>Search:</label>
-                    <Search placeholder="input search text"
-                    onSearch={value => console.log(value)}
-                    style={{ width: 200 }} enterButton />
-                </div>
-                <label><input type="radio" id="cluster_id" name="id" value="clusterid" />
-                        Cluster Id</label>
-                        <label><input type="radio" id="cluster_name" name="clustername" value="clustername" />
-                        Cluster Name</label><br /><br />
-                <table className="table table-striped" id="students" >
-                    <thead>
-                        <tr>
-                            {/* <th className="hidden">Cluster Id</th> */}
-                            <th>Cluster Name</th>
-                            <th>Cluster Type</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.state.users.map(
-                        user =>
-                                    <tr key={user.id}>
-                                        <td>{user.clustername}</td>
-                                        <td>{user.clustertype}</td>
-                                        <td><EditFilled onClick={() => this.editUser(user.id)}/></td>
-                                        <td><DeleteFilled onClick={() => this.deleteUser(user.id)}/></td>
-                                    </tr>
-                            )
-                        }
-                    </tbody>
-                    </table>
-            </form>
-            {/* <Table columns={columns} dataSource={user} /> */}
+            <div >
+                <form>
+                    <h2>Cluster List</h2>
+                    
+                    <Button type="primary" onClick={() => this.addUser()}>Add Cluster</Button><br /><br/>
+                    <div>
+                        <label>Search:</label>
+                        <Search placeholder="input search text"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 200 }} enterButton />
+                    </div>
+                    <label>
+                        <input type="radio" id="cluster_id" name="cluster_id" value="clusterid" />
+                        Cluster Id
+                    </label>
+                    <label>
+                        <input type="radio" id="cluster_name" name="clustername" value="clustername" />
+                        Cluster Name
+                    </label><br/><br/>
+                </form>
+                <Table
+                    columns={columns} 
+                    dataSource={this.state.users} 
+                    bordered
+                    onChange={this.handleChange} 
+                />
           </div>
         );
     }

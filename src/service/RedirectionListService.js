@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = 'http://localhost:8102/users';
+const USER_API_BASE_URL = 'http://localhost:8102/rllist';
 
-class ApiService {
+class RedirectionListService {
 
     fetchUsers() {
         return axios.get(USER_API_BASE_URL);
     }
 
-    fetchUserById(userId) {
-        return axios.get(USER_API_BASE_URL + '/' + userId);
+    fetchUserById(id) {
+        return axios.get(USER_API_BASE_URL + '/' + id);
     }
 
     deleteUser(userId) {
@@ -26,4 +26,4 @@ class ApiService {
 
 }
 
-export default new ApiService();
+export default new RedirectionListService();

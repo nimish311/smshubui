@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ApiService from "../../service/ApiService";
+import { Button, Input } from 'antd';
 
 class AddOperatorCluster extends Component{
 
@@ -12,24 +13,24 @@ class AddOperatorCluster extends Component{
             message: null
         }
         this.saveUser = this.saveUser.bind(this);
-        this.loadUser = this.loadUser.bind(this);
+        // this.loadUser = this.loadUser.bind(this);
     }
 
-    componentDidMount() {
-        this.loadUser();
-    }
+    // componentDidMount() {
+    //     this.loadUser();
+    // }
 
-    loadUser() {
-        ApiService.fetchUserById(window.localStorage.getItem("userId"))
-            .then((res) => {
-                let user = res.data.result;
-                this.setState({
-                id: user.id,
-                clustername:user.clustername,
-                clustertype:user.clustertype,
-                })
-            });
-    }
+    // loadUser() {
+    //     ApiService.fetchUserById(window.localStorage.getItem("userId"))
+    //         .then((res) => {
+    //             let user = res.data.result;
+    //             this.setState({
+    //             id: user.id,
+    //             clustername:user.clustername,
+    //             clustertype:user.clustertype,
+    //             })
+    //         });
+    // }
     onChange = (e) =>{
         this.setState({ [e.target.name]: e.target.value },
             );
@@ -55,14 +56,15 @@ class AddOperatorCluster extends Component{
     
     render(){
         return(
-            <div>
+            <div style={{float:"left"}}>
                 <form>
                     <fieldset>
                     <label for="clustername" class="required">Cluster name:</label>
                         <input type="text" id="cluster_name" maxlength="10" name="clustername" className='form-control'
                         value={this.state.clustername} onChange={this.onChange} /><br/><br/>
 
-                        <label for="" >Cluster Type: </label>
+                        {/* <label for="" >Cluster Type: </label> */}
+                        {/* <Input placeholder="cluster type"></Input> */}
                         <label><input type="radio" id="cluster_type" name="clustertype" value="Default" 
                         onChange={this.onChangeradio}  defaultChecked/>
                         Default</label>
@@ -71,9 +73,9 @@ class AddOperatorCluster extends Component{
                         Roaming</label><br /><br />
 
                         <div>
-                                <button class="gaping" id="done" onClick={this.saveUser} disabled={!this.state.clustername}>Done</button>
-                                <button id="clear" class="gaping">Clear</button>
-                                <button id="cancel" onClick={() => this.props.history.push('/environmentSetup-operatorCluster')}>Cancel</button>
+                            <Button type="primary" class="gaping" id="done" onClick={this.saveUser} disabled={!this.state.clustername}>Done</Button>
+                            <Button type="default" id="clear" class="gaping">Clear</Button>
+                            <Button type="danger" id="cancel" onClick={() => this.props.history.push('/environmentSetup-operatorCluster')}>Cancel</Button>
                         </div>
                         <br/><br/>
                         <label class="mandatory" >* Denotes Mandatory Fields</label>

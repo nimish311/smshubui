@@ -1,23 +1,22 @@
 import React,{ Component } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-// import Main from '../Main';
-// import {Route,  Router} from "react-router-dom";
+import { Form, Input, Button, Checkbox, Typography} from 'antd';
 import history from "../History";
 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
+const {Title} = Typography;
+// const layout = {
+//   labelCol: {
+//     span: 8,
+//   },
+//   wrapperCol: {
+//     span: 16,
+//   },
+// };
+// const tailLayout = {
+//   wrapperCol: {
+//     offset: 8,
+//     span: 16,
+//   },
+// };
 
 
 class Login extends Component{
@@ -45,8 +44,8 @@ class Login extends Component{
         console.log("Password is "+this.state.password);
 
         if(this.state.password === "admin" && this.state.username === "admin"){
-            // this.props.history.push('/homePage');
             history.push("/welcome");
+            
         }
         else{
             console.log("Failed");
@@ -57,50 +56,62 @@ class Login extends Component{
     render(){
         return (
             <div>
-                <Form
-                {...layout}
-                name="basic"
-                initialValues={{
-                    remember: true,
-                }}
-                
-                >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[
-                    {
-                        required: true,
-                        message: 'Please input your username!',
-                    },
-                    ]}
-                >
-                    <Input  onChange={this.getUsername} />
-                </Form.Item>
-        
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                    {
-                        required: true,
-                        message: 'Please input your password!',
-                    },
-                    ]}
-                >
-                    <Input.Password  onChange={this.getPassword} />
-                </Form.Item>
-        
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+            <Title l> Login to SMSHub</Title>
+                <Form 
+                // {...layout}
+                    name="basic"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    
+                    >
+                    <Form.Item
+                        label="Username"
+                        name="username"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your username!',
+                        },
+                        ]}
+                    >
+                        <Input  onChange={this.getUsername} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your password!',
+                        },
+                        ]}
+                    >
+                        <Input.Password   onChange={this.getPassword} />
+                    </Form.Item>
             
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={ () => this.handleSubmit()}>
-                    Submit
-                    </Button>
-                </Form.Item>
+                    {/* <Form.Item 
+                        // {...tailLayout} 
+                        name="remember" 
+                        valuePropName="checked">
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item> */}
+
+                    <Form.Item 
+                    // {...tailLayout}
+                    >
+                        <Button type="primary" htmlType="submit" disabled={!this.state.username || !this.state.password } onClick={ () => this.handleSubmit()}>
+                        Submit
+                        </Button>
+                    </Form.Item>
+                
                 </Form>
+                    <p>
+                        © Copyright 2020 Comviva Technologies Ltd.
+                        <br/>Visit us at www.comviva.com
+
+                    </p>
             </div>
 
             
