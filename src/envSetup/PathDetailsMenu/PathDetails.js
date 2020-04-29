@@ -2,56 +2,48 @@ import React, { Component } from 'react';
 import { Button, Typography, Select} from 'antd';
 
 const {Title} = Typography;
-
+const {Option} = Select;
 
 class PathDetails extends Component{
-    // addList(){
-    //     window.localStorage.removeItem("userId");
-    //     this.props.history.push('/add-pathDetails');
+    addList(){
+        window.localStorage.removeItem("userId");
+        this.props.history.push('/add-pathDetails');
+    }
+    // addToDemoTable(){
+
     // }
     state={
         list:[]
     }
     
     async componentDidMount(){
-        // const url= "http://localhost:8102/rllist";
-        // const response = await fetch(url);
-        // const data = await response.json();
-        // this.setState({ person: data.results[0], loading:false  });
-
-        // const url = "http://localhost:8102/rllist";
-        // const response = fetch(url);
-        // const data = await response.json();
-        // this.setState({})
-
         let initialPlanets = [];
-            fetch('http://localhost:8102/rllist')
+            fetch('http://localhost:8103/rllist')
                 .then(response => {
                     return response.json();
                 }).then(data => {
                 initialPlanets = data.result.map((listname) => {
-                    return listname
+                    return listname;
                 });
-                console.log("niihs");
+                console.log(initialPlanets);
                 this.setState({
                     list: initialPlanets,
                 });
-                // console.log(list);
             });
-            // let optionItems = 
     }
     render(){
         return(
             <div>
-                <div><h1>pathDetails</h1></div>
-                <select>
-                    {this.state.list.map(( nimish) => <option> {nimish.id} </option> )}
-                </select>
+                <br/>
+                <Title level={4}>Path Details page</Title>
+                <label>Dynamic Dropdown</label>
+                <Select placeholder="dynamic">
+                    {this.state.list.map(( nimish) => <Option value={nimish.listname}> {nimish.listname} </Option> )}
+                </Select>
+                <br/><br/>
+                <Button type="primary" onClick={() => this.addList()}> Add user</Button>
+                {/* <Button type="primary" onClick={() => this.addToDemoTable()}>Add DD value</Button> */}
             </div>
-
-
-            
-
         )
     }
     

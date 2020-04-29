@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import Main from "./Main";
+import Main from "./Main";
 // import Login from './LoginMenu/Login'
-import App from "./App"
+// import App from "./App"
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
 
     // <Login />,
-    // <Main/>,
-    <App/>,
+    <Main/>,
+    // <App/>,
     document.getElementById('root')
 );
 

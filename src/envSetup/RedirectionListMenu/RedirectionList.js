@@ -3,12 +3,10 @@ import RedirectionListService from "../../service/RedirectionListService";
 import { Table,Button, Typography} from 'antd';
 import {EditFilled, DeleteFilled} from '@ant-design/icons'
 import 'antd/dist/antd.css'
-import { Input } from 'antd';
 import history from "../../History"
 import '../../styling/Styletable.css'
 
 const {Title} = Typography;
-const { Search } = Input;
 
 class RedirectionList extends Component{
 

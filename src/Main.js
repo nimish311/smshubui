@@ -10,6 +10,15 @@ import OperatorCluster from "./envSetup/OperatorClusterMenu/OperatorCluster";
 import AddOperatorCluster from "./envSetup/OperatorClusterMenu/AddOperatorCluster";
 import PathDetails from "./envSetup/PathDetailsMenu/PathDetails";
 import AddPathDetails from "./envSetup/PathDetailsMenu/AddPathDetails";
+import DealManagement from "./envSetup/DealManagementMenu/DealManagement"
+import AddDealManagement from "./envSetup/DealManagementMenu/AddDealManagement"
+
+import HomeNetwork from './envSetup/HomeNetworkMenu/HomeNetwork';
+import  AddPCDetails from "./envSetup/HomeNetworkMenu/AddPCDetails"
+import Pcddetails from './envSetup/HomeNetworkMenu/Pcddetails';
+import AddMNPGateway from './envSetup/HomeNetworkMenu/AddMNPGateway';
+import MNPdetails from './envSetup/HomeNetworkMenu/MNPdetails';
+
 
 const { SubMenu } = Menu;
 const {Title} = Typography;
@@ -23,8 +32,11 @@ class Main extends Component{
         return(
             <Router history={history}>
 				<div style={{float:"left"}}>
-					
+
+					<div>
+
 					<Title level={3}>SMSHub</Title>
+					</div>
 					<Menu onClick={handleClick} style={{ width: 256 }} mode="vertical">
 						<SubMenu
 							key="sub1"
@@ -45,11 +57,15 @@ class Main extends Component{
 								</span>
 							}
 							>
-							<Menu.Item>Home Network</Menu.Item>
+							<Menu.Item><NavLink to="/environmentSetup-homeNetwork">Home Network</NavLink></Menu.Item>
 							<Menu.Item>Retry Policy</Menu.Item>
 							<Menu.Item>Redirection Accounts</Menu.Item>
 							<Menu.Item > <NavLink  to="/environmentSetup-redirectionList"></NavLink> Redirection List</Menu.Item>
-							<Menu.Item>Operator Profile</Menu.Item>
+							<Menu.Item>
+								{/* <NavLink  to="/environmentSetup-dealManagement"> */}
+									Deal Management
+								{/* </NavLink> */}
+							</Menu.Item>
 							<Menu.Item> <NavLink  to="/environmentSetup-pathDetails">Path Details</NavLink>Path Details</Menu.Item>
 							<Menu.Item><NavLink  to="/environmentSetup-operatorCluster">Operator Cluster</NavLink>Operator Cluster</Menu.Item>
 							<Menu.Item>LCR Profile</Menu.Item>
@@ -57,8 +73,8 @@ class Main extends Component{
 							<Menu.Item>Customer/Supplier</Menu.Item>
 							<Menu.Item>HTTP Templates</Menu.Item>
 							<Menu.Item>Customer/Supplier Group</Menu.Item>
-							<Menu.Item>Deal Management</Menu.Item>
 							<Menu.Item>Channel Partners</Menu.Item>
+							<Menu.Item>Operator Profile</Menu.Item>
 							<Menu.Item>Customer Credit Profile</Menu.Item>
 							<Menu.Item>Credit Transactions</Menu.Item>
 						</SubMenu>
@@ -119,6 +135,12 @@ class Main extends Component{
 				
 				<div className="content">
 					<Route path="/homePage" component={Main} />
+					
+					<Route path="/environmentSetup-homeNetwork" component={HomeNetwork}/>
+					<Route path="/add-pcd" component={AddPCDetails}/>
+					<Route path="/listpcd" component={Pcddetails}/>
+					<Route path="/add-mnp" component={AddMNPGateway}/>
+					<Route path="/listmnp" component={MNPdetails}/>
 
 					<Route path="/environmentSetup-redirectionList" component={RedirectionList} />
 					<Route path="/add-redirectionList" component={AddRedirectionList}/>
@@ -126,6 +148,9 @@ class Main extends Component{
 					<Route path="/environmentSetup-operatorCluster" component={OperatorCluster}/>
 					<Route path="/add-operatorCluster" component={AddOperatorCluster}/>
 					
+					<Route path="/environmentSetup-dealManagement" component={DealManagement}/>
+                    <Route path="/add-dealManagement" component={AddDealManagement}/>
+
 					<Route path="/environmentSetup-pathDetails" component={PathDetails}/>
 					<Route path="/add-pathDetails" component={AddPathDetails}/>
 				</div>

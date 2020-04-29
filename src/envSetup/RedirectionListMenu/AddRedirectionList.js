@@ -11,23 +11,23 @@ class AddRedirectionList extends Component{
 	constructor(props){
 		super(props)
 			this.state = {
-								id:'',
+				id:'',
                 listname:'',
                 listtype:'',
-								loadDistributionType:'',
+				loadDistributionType:'',
                 selectedItems:[],
 								
-								showPercentage:false,
-								esmeAccount:false,
-								pointcodeAccount:false,
+				showPercentage:false,
+				esmeAccount:false,
+				pointcodeAccount:false,
 
-								message:null
+				message:null
 								
 			}
         this.saveRedirectionList = this.saveRedirectionList.bind(this);
         this.handleDropdownChangeLoad = this.handleDropdownChangeLoad.bind(this);
         this.handleDropdownChangeType = this.handleDropdownChangeType.bind(this);
-				this.loadRedirectionList = this.loadRedirectionList.bind(this);
+		this.loadRedirectionList = this.loadRedirectionList.bind(this);
 	}
 
     // selectedItems => {
@@ -100,12 +100,8 @@ class AddRedirectionList extends Component{
                     initialValues={{ remember: true }}
                 >
                     <Form.Item 
-                        label = "List Name"
-                        name = "listname"
-												rules = {[{ 
-                            required: true, 
-														message: 'Please input your List Name!',
-												},]}
+                        label = "List Name" name = "listname"
+						rules = {[{ required: true, message: 'Please input your List Name!'}]}
                   	  >
                         <Input 
                             type="text" 
@@ -117,10 +113,8 @@ class AddRedirectionList extends Component{
                   	</Form.Item>
                 
                     <Form.Item
-                        label="List Type"
-                        name="listtype"
+                        label="List Type" name="listtype"
                         rules = {[{required:true}]}
-                        
                         >
                         <Select placeholder="Click to see List Types" onChange={this.handleDropdownChangeType}>
                             <Option value="esme">ESME</Option>
@@ -130,8 +124,7 @@ class AddRedirectionList extends Component{
                     </Form.Item>
 
                     <Form.Item
-                        label="Load Distribution Type"
-                        name="loadDistributionType"
+                        label="Load Distribution Type" name="loadDistributionType"
                         rules = {[{required:true}]}
                         >
                         <Select placeholder="Click to see Load Distribution Types" onChange={this.handleDropdownChangeLoad}>
@@ -141,44 +134,44 @@ class AddRedirectionList extends Component{
                         </Select>
                     </Form.Item>
 
-										{this.state.showPercentage &&
-											<Form.Item
-											label="Sample Value"
-											name="sampleValue"
-											rules = {[{required:true}]}
-											>
-												<InputNumber></InputNumber>
-											</Form.Item>
-										}
+                    {this.state.showPercentage &&
+                        <Form.Item
+                        label="Sample Value"
+                        name="sampleValue"
+                        rules = {[{required:true}]}
+                        >
+                            <InputNumber></InputNumber>
+                        </Form.Item>
+                    }
 
-										{this.state.esmeAccount &&
-                    <Form.Item
-                        label="Select Accounts"
-                        name="selectAccounts"
-                        rules = {[{required: true}]}
-                        >
-                        <Select
-                            mode="multiple"
-                            placeholder="Multiple value can be selected"
-                            value={selectedItems}
-                            onChange={this.handleChange}
-                            style={{ width: '100%' }}
-                        >
-                            {filteredOptions.map(item => (
-                            <Select.Option key={item} value={item}>
-                                {item}
-                            </Select.Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-										}
+                    {this.state.esmeAccount &&
+                        <Form.Item
+                            label="Select Accounts"
+                            name="selectAccounts"
+                            rules = {[{required: true}]}
+                            >
+                            <Select
+                                mode="multiple"
+                                placeholder="Multiple value can be selected"
+                                value={selectedItems}
+                                onChange={this.handleChange}
+                                style={{ width: '100%' }}
+                            >
+                                {filteredOptions.map(item => (
+                                <Select.Option key={item} value={item}>
+                                    {item}
+                                </Select.Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    }
 
                     <Form.Item > 
-											<Button type="primary" onClick={this.saveRedirectionList} disabled={!this.state.listname || !this.state.listtype || !this.state.loadDistributionType} >Submit</Button>
-											<Button type="primary" onClick={() => history.push('/environmentSetup-redirectionList')}>Cancel</Button>
-            		    </Form.Item>
+                        <Button type="primary" onClick={this.saveRedirectionList} disabled={!this.state.listname || !this.state.listtype || !this.state.loadDistributionType} >Submit</Button>
+                        <Button type="danger" onClick={() => history.push('/environmentSetup-redirectionList')}>Cancel</Button>
+            		</Form.Item>
 
-								</Form>
+				</Form>
             </div>
         );
     }

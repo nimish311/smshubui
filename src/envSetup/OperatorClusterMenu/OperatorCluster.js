@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ApiService from "../../service/ApiService";
-import { Table, Button } from 'antd';
+import { Table, Button , Form, Radio} from 'antd';
 import {EditFilled , DeleteFilled , PlusCircleFilled} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { Input } from 'antd';
 // import '../../styling/Styletable.css';
-
+import history from "../../History"
 
 const { Search } = Input;
 
@@ -34,31 +34,33 @@ class OperatorCluster extends Component{
             });
     }
 
-    deleteUser(userId) {
-        ApiService.deleteUser(userId)
+    deleteUser(clusterId) {
+        ApiService.deleteUser(clusterId)
            .then(res => {
                this.setState({message : 'User deleted successfully.'});
-               this.setState({users: this.state.users.filter(user => user.id !== userId)});
+               this.setState({users: this.state.users.filter(user => user.cluster_id !== clusterId)});
            })
 
     }
 
-    editUser(id) {
-        window.localStorage.setItem("userId", id);
-        this.props.history.push('/add-operatorCluster');
+    editUser(cluster_id) {
+        window.localStorage.setItem("clusterId", cluster_id);
+        // alert(window.localStorage.getItem("clusterId"));
+        history.push('/add-operatorCluster');
     }
 
     addUser() {
-        window.localStorage.removeItem("userId");
-        this.props.history.push('/add-operatorCluster');
+        window.localStorage.removeItem("clusterId");
+        history.push('/add-operatorCluster');
     }
     
     state = {
                 sortedInfo: null,
+        
             };
-            
+
     handleChange = (pagination, filters, sorter) => {
-        console.log('Various parameters', pagination, filters, sorter);
+        console.log('Various parameters',pagination, filters, sorter);
         this.setState({
             sortedInfo: sorter,
         });
@@ -74,79 +76,139 @@ class OperatorCluster extends Component{
         this.setState({
             sortedInfo: {
                 order: 'descend',
-                columnKey: 'id',
+                columnKey: 'age',
             },
         });
     };
     
     render(){
-        let { sortedInfo} = this.state;
+        let { sortedInfo } = this.state;
         sortedInfo = sortedInfo || {};
         const columns = [
             {
                 title: 'Cluster Id',
-                dataIndex: 'id',
-                key: 'id',
-                sorter: (a, b) => a.id - b.id,
-                sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+                dataIndex: 'cluster_id',
+                key: 'cluster_id',
+                sorter: (a, b) => a.cluster_id - b.cluster_id,
+                sortOrder: sortedInfo.columnKey === 'cluster_id' && sortedInfo.order,
                 ellipsis: true,
             },
             {
             title: 'Cluster Name',
-            dataIndex: 'clustername',
-            key: 'clustername',
-            sorter: (a, b) => a.clustername.localeCompare(b.clustername),
-                sortOrder: sortedInfo.columnKey === 'clustername' && sortedInfo.order,
+            dataIndex: 'cluster_name',
+            key: 'cluster_name',
+            sorter: (a, b) => a.cluster_name.localeCompare(b.cluster_name),
+                sortOrder: sortedInfo.columnKey === 'cluster_name' && sortedInfo.order,
                 ellipsis: true,
             },
             {
             title: 'Cluster Type',
-            dataIndex: 'clustertype',
-            key: 'clustertype',
+            dataIndex: 'cluster_type',
+            key: 'cluster_type',
             
             },
             {
             title: 'Edit',
             dataIndex: 'edit',
             key: 'edit',
-            render: () => <EditFilled/>,
+            render: (text, record) => <EditFilled 
+               onClick={() => { this.editUser(record.cluster_id);}}
+            />,
             },
             {
                 title: 'Delete',
                 dataIndex: 'delete',
                 key: 'delete',
-                render: (text, record) => <DeleteFilled 
-                onClick={() => {this.deleteUser(record.id);}}/>,
+            render: (text, record) => <DeleteFilled 
+            onClick={() => { this.deleteUser(record.cluster_id); }}/>,
             }
         ];
         return(
-            <div >
-                <form>
-                    <h2>Cluster List</h2>
-                    
-                    <Button type="primary" onClick={() => this.addUser()}>Add Cluster</Button><br /><br/>
-                    <div>
-                        <label>Search:</label>
-                        <Search placeholder="input search text"
-                        onSearch={value => console.log(value)}
-                        style={{ width: 200 }} enterButton />
-                    </div>
-                    <label>
-                        <input type="radio" id="cluster_id" name="cluster_id" value="clusterid" />
-                        Cluster Id
-                    </label>
-                    <label>
-                        <input type="radio" id="cluster_name" name="clustername" value="clustername" />
-                        Cluster Name
-                    </label><br/><br/>
-                </form>
-                <Table
-                    columns={columns} 
-                    dataSource={this.state.users} 
-                    bordered
-                    onChange={this.handleChange} 
-                />
+            // <div>
+            // <form>
+            //     <h2>Cluster List</h2>
+                
+            //     <Button  icon={<PlusCircleFilled/>} onClick={() => this.addUser()}>add
+            //     </Button><br /><br/>
+                
+            //     {/* <div>
+            //         <label>Search:</label>
+            //         <Search placeholder="input search text"
+            //         onSearch={value => console.log(value)}
+            //         style={{ width: 200 }} enterButton />
+            //     </div> */}
+            //     <Radio.Group name="type"  onChange={this.onChangeradio} 
+            //         // value={this.state.value}
+            //         >
+            //             <Radio value={1} >CLuster Name</Radio>
+            //             <Radio value={2}>Cluster Id</Radio>
+
+            //         </Radio.Group>
+            //     {/* <label><input type="radio" id="cluster_id" name="cluster_id" value="clusterid" />
+            //             Cluster Id</label>
+            //             <label><input type="radio" id="cluster_name" name="cluster_name" value="clustername" />
+            //             Cluster Name</label><br /><br /> */}
+            //     {/* <table className="table table-striped" id="students" >
+            //         <thead>
+            //             <tr>
+            //                 <th className="hidden">Cluster Id</th>
+            //                 <th>Cluster Name</th>
+            //                 <th>Cluster Type</th>
+            //                 <th>Edit</th>
+            //                 <th>Delete</th>
+            //             </tr>
+            //         </thead>
+            //         <tbody>
+            //             {
+            //                 this.state.users.map(
+            //             user =>
+            //                         <tr key={user.id}>
+            //                             <td>{user.clustername}</td>
+            //                             <td>{user.clustertype}</td>
+            //                             <td><EditFilled onClick={() => this.editUser(user.id)}/></td>
+            //                             <td><DeleteFilled onClick={() => this.deleteUser(user.id)}/></td>
+            //                         </tr>
+            //                 )
+            //             }
+            //         </tbody>
+            //         </table> */}
+            // </form>
+            <div>
+            <Form>
+                <Form.Item>
+                <Button  icon={<PlusCircleFilled/>} onClick={() => this.addUser()}>add
+                </Button>
+                </Form.Item>
+
+                <Form.Item 
+                label = "Search"
+                name = "search">
+                    <Search placeholder="input search text"
+                    onSearch={value => console.log(value)}
+                   style={{ width: 200 }} enterButton />
+                </Form.Item>
+
+                <Form.Item>
+                <Radio.Group name="type"  onChange={this.onChangeradio} 
+                    // value={this.state.value}
+                    >
+                        <Radio value={1} >CLuster Name</Radio>
+                        <Radio value={2}>Cluster Id</Radio>
+
+                    </Radio.Group>
+                </Form.Item>
+
+            </Form>
+            <Table
+             columns={columns} 
+             dataSource={this.state.users} 
+            //  id="students" 
+             bordered
+             onChange={this.handleChange} 
+             size="small"
+             style={{width:1200}} />
           </div>
+        //    </div> 
         );
     }
 }

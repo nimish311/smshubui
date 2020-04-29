@@ -1,22 +1,10 @@
 import React,{ Component } from 'react';
-import { Form, Input, Button, Checkbox, Typography} from 'antd';
+import { Form, Input, Button, Checkbox, Typography, Card} from 'antd';
 import history from "../History";
+import Icon, { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const {Title} = Typography;
-// const layout = {
-//   labelCol: {
-//     span: 8,
-//   },
-//   wrapperCol: {
-//     span: 16,
-//   },
-// };
-// const tailLayout = {
-//   wrapperCol: {
-//     offset: 8,
-//     span: 16,
-//   },
-// };
+
 
 
 class Login extends Component{
@@ -55,42 +43,37 @@ class Login extends Component{
 
     render(){
         return (
-            <div>
-            <Title l> Login to SMSHub</Title>
+            <div style={{height: '100vh', padding: 5}}>
+                <center>
+
+                <Card style={{width: '50%', marginTop:"60px"}}>
+            <Title level={2}> Login to SMSHub</Title>
                 <Form 
-                // {...layout}
                     name="basic"
                     initialValues={{
                         remember: true,
                     }}
-                    
                     >
                     <Form.Item
-                        label="Username"
-                        name="username"
-                        rules={[
-                        {
+                        label="Username"  name="username"
+                        rules={[{
                             required: true,
                             message: 'Please input your username!',
-                        },
-                        ]}
+                        }]}
                     >
-                        <Input  onChange={this.getUsername} />
+                        <Input prefix={<UserOutlined />} onChange={this.getUsername} />
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
-                        name="password"
-                        rules={[
-                        {
+                        label="Password" name="password"
+                        rules={[{
                             required: true,
                             message: 'Please input your password!',
-                        },
-                        ]}
+                        }]}
                     >
-                        <Input.Password   onChange={this.getPassword} />
+                        <Input.Password  prefix={<LockOutlined/>} onChange={this.getPassword} />
                     </Form.Item>
-            
+
                     {/* <Form.Item 
                         // {...tailLayout} 
                         name="remember" 
@@ -98,20 +81,22 @@ class Login extends Component{
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item> */}
 
-                    <Form.Item 
-                    // {...tailLayout}
-                    >
-                        <Button type="primary" htmlType="submit" disabled={!this.state.username || !this.state.password } onClick={ () => this.handleSubmit()}>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" 
+                            disabled={!this.state.username || !this.state.password }
+                            onClick={ () => this.handleSubmit()}>
                         Submit
                         </Button>
                     </Form.Item>
-                
                 </Form>
+                    </Card>
+                    
                     <p>
                         © Copyright 2020 Comviva Technologies Ltd.
                         <br/>Visit us at www.comviva.com
 
                     </p>
+                    </center>
             </div>
 
             
